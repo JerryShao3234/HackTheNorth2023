@@ -7,7 +7,7 @@ function App() {
     const [imageURLs, setImageURLs] = useState([])
 
     const processInput = () => {
-        getStory("Write a children's book about a knight and a dragon in ten or less sentences with simple vocabulary").then((response) => {
+        getStory("Write a children's story about three little pigs and the bear in ten or less sentences with simple vocabulary").then((response) => {
             setText(response);
             return getGeneratedImages(response);
         }).then((imageURLs) => {

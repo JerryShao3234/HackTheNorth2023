@@ -19,7 +19,80 @@ const promptsOptions = {
     }
 }
 
-
+// const characters = [
+//     {
+//         name: "Sir Simon",
+//         type: "knight",
+//     },
+//     {
+//         name: "Merlin",
+//         type: "dragon",
+//     },
+//     {
+//         name: "princesses",
+//         type: "princesses",
+//     }
+// ]
+//
+// const scenes = [
+//     "There was a knight",
+//     "A dragon lived in a cave and kidnapped princesses",
+//     "The knight approached the cave",
+//     "The dragon attacked the knight",
+//     "The knight rescued the princesses",
+//     "The kingdom celebrated the knight"
+// ]
+//
+// const test = () => {
+//     characters.forEach((character) => {
+//         sendMessageMJ(character.type).then((messageId) => {
+//             return retrieveMessageMJ(messageId);
+//         }).then((url) => {
+//             character.url = url;
+//         }).catch((error) => {
+//             console.log(error);
+//         })
+//     })
+//
+//     console.log(characters);
+//
+//     scenes.forEach((scene) => {
+//         const characterUrls = [];
+//         characters.forEach((character) => {
+//             if (scene.includes(character.type) || scene.includes(character.name)) {
+//                 characterUrls.push(character.url);
+//             }
+//         })
+//
+//
+//         image1.src = 'image1.jpg';
+//         image2.src = 'image2.jpg';
+//
+//         // Create a canvas element
+//         var canvas = document.createElement('canvas');
+//         var ctx = canvas.getContext('2d');
+//
+//         // Set the canvas dimensions to fit both images
+//         canvas.width = Math.max(image1.width, image2.width);
+//         canvas.height = image1.height + image2.height;
+//
+//         // Draw the first image
+//         ctx.drawImage(image1, 0, 0);
+//
+//         // Draw the second image below the first one
+//         ctx.drawImage(image2, 0, image1.height);
+//
+//         // Create a new image element for the appended image
+//         var appendedImage = new Image();
+//         appendedImage.src = canvas.toDataURL('image/jpeg'); // You can change the format as needed
+//
+//             // Append the new image to the body or any other element
+//
+//         const query = characterUrls.join(" ") + " " + scene;
+//
+//         sendMessageMJ(scene).then((messageId) => {
+//     })
+// }
 
 const stableDiffusionOptions = {
     method: 'POST',
@@ -71,7 +144,7 @@ const getGeneratedImages = async (text) => {
     const promptGenerator = "Generate four image prompts separated by periods to give to stable diffusion in order to accurately represent the following story: \""+text+"\""
     const options = {...promptsOptions}
     options.data.prompt = promptGenerator;
-    options.data.temperature = 0.5;
+    options.data.temperature = 1;
 
     return axios
         .request(options)
@@ -89,13 +162,18 @@ const getGeneratedImages = async (text) => {
             console.log(promptList)
 
             const imagePromises = promptList.map((prompt) => {
-                const optionCopy = {...stableDiffusionOptions};
-                optionCopy.data.prompt = prompt + ", drawn by a child"
+                const realPrompt = prompt + ", drawn by a child, watercolor"
 
-                return axios.request(optionCopy).then((response) => {
-                    console.log(response);
-                    return response.data.output[0];
+                return sendMessageMJ(realPrompt).then((messageId) => {
+                    return retrieveMessageMJ(messageId);
+                }).then((url) => {
+                    return url
                 })
+
+                // return axios.request(optionCopy).then((response) => {
+                //     console.log(response);
+                //     return response.data.output[0];
+                // })
             })
 
             return Promise.all(imagePromises);
@@ -109,7 +187,7 @@ const getGeneratedImages = async (text) => {
 
 const sendMessageMJ = async (inputMsg) => {
     const URL = 'https://api.thenextleg.io/v2/imagine';
-    
+
     const options = {
         method: 'POST',
         url: URL,
@@ -140,7 +218,7 @@ const sendMessageMJ = async (inputMsg) => {
 
 const retrieveMessageMJ = async (messageId) => {
     const URL = `https://api.thenextleg.io/v2/message/${messageId}?expireMins=2`;
-    
+
     const options = {
         method: 'GET',
         url: URL,
@@ -151,15 +229,14 @@ const retrieveMessageMJ = async (messageId) => {
     }
 
     try {
-        const response = await axios.request(options);
-        const responseData = response.data;
-        if(responseData.progress === 100) {
-            return {
-                imageUrl: responseData.response.imageUrl,
-                imageUrls: responseData.response.imageUrls
-            };
-        } else {
-            throw new Error('Message processing is not yet complete.');
+        while (true) {
+            console.log("polling");
+            setTimeout(() => {}, 2000);
+            const response = await axios.request(options);
+            const responseData = response.data;
+            if (responseData.progress === 100) {
+                return responseData.response.imageUrls[0]
+            }
         }
     } catch (error) {
         console.error(error);
