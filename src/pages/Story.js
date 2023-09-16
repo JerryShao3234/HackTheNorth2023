@@ -10,7 +10,7 @@ import { FallingLines } from  'react-loader-spinner'
 
 const PageCover = React.forwardRef((props, ref) => {
     return (
-        <div className="cover" ref={ref} data-density="hard">
+        <div className="cover" id="cover" ref={ref} data-density="hard">
             <div>
                 <h2>{props.children}</h2>
             </div>
@@ -33,7 +33,8 @@ export default function Story() {
     const [imageUrls, setImageUrls] = React.useState([]);
     const [realStory, setRealStory] = React.useState("");
 
-    React.useEffect(async () => {
+    React.useEffect(() => {
+        // Define an async function within the useEffect
         async function getData() {
             try {
                 const upscaledStory = await getStory(story);
@@ -43,10 +44,10 @@ export default function Story() {
             } catch (err) {
                 console.log(err)
             }
-        }
-
+        }    
         getData();
     }, []);
+    
 
     if (imageUrls.length === 0) {
         return (
