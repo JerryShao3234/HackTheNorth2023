@@ -139,8 +139,6 @@ ${text}
 extract the characters and their type from the story:
 `
 
-    console.log(promptGenerator);
-
     const options = {...promptsOptions}
     options.data.prompt = promptGenerator;
     options.data.temperature = 0.9;
@@ -286,8 +284,6 @@ ${text}
 extract the scenes from the story:
 `
 
-    console.log(promptGenerator);
-
     const options = {...promptsOptions}
     options.data.prompt = promptGenerator;
     options.data.temperature = 0.9;
@@ -383,7 +379,7 @@ const retrieveMessageMJ = async (messageId) => {
             authorization: `Bearer ${midjourneyKey}`
         }
     }
-    let delay = 1000;
+    let delay = 2000;
     try {
         while (true) {
             console.log("polling");
@@ -394,7 +390,7 @@ const retrieveMessageMJ = async (messageId) => {
             if (responseData.progress === 100) {
                 return responseData.response.imageUrls[0]
             } else {
-                delay = delay * 2;
+                delay = delay * 1.5;
             }
         }
     } catch (error) {
