@@ -4,11 +4,14 @@ import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import TextField from '@mui/material/TextField';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
-import {submitInput} from '../generate';
+// import {submitInput} from '../generate';
 import { useNavigate } from "react-router-dom";
 
 export default function Prompt() {
     const navigate = useNavigate();
+
+    const submitInput = (input) => {
+    }
 
     return (
         <div>
