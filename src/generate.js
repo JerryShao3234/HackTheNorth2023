@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const stableDiffusionKey = "iDHGfAwoqC50ad3Osu2ZivQ7KgFrLQ2BhYv7vr8wwFejxUrLT6s8aIeWozpW"
+const midjourneyKey = 'ae5628d2-7dcf-455a-80d5-c5e3aa8d3a9c';
 
 const promptsOptions = {
     method: 'POST',
@@ -17,6 +18,8 @@ const promptsOptions = {
         prompt: ""
     }
 }
+
+
 
 const stableDiffusionOptions = {
     method: 'POST',
@@ -102,6 +105,69 @@ const getGeneratedImages = async (text) => {
         });
 }
 
-export {getStory, getGeneratedImages}
+// MidJourney API
+
+const sendMessageMJ = async (inputMsg) => {
+    const URL = 'https://api.thenextleg.io/v2/imagine';
+    
+    const options = {
+        method: 'POST',
+        url: URL,
+        headers: {
+            accept: 'application/json',
+            'content-type': 'application/json',
+            authorization: `Bearer ${midjourneyKey}`
+        },
+        data: {
+            msg: inputMsg,
+            ref: "",
+            webhookOverride: "",
+            ignorePrefilter: "false"
+        }
+    }
+
+    try {
+        const response = await axios.request(options);
+        if (response.data.success) {
+            return response.data.messageId;
+        } else {
+            throw new Error('Failed to send message.');
+        }
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const retrieveMessageMJ = async (messageId) => {
+    const URL = `https://api.thenextleg.io/v2/message/${messageId}?expireMins=2`;
+    
+    const options = {
+        method: 'GET',
+        url: URL,
+        headers: {
+            accept: 'application/json',
+            authorization: `Bearer ${midjourneyKey}`
+        }
+    }
+
+    try {
+        const response = await axios.request(options);
+        const responseData = response.data;
+        if(responseData.progress === 100) {
+            return {
+                imageUrl: responseData.response.imageUrl,
+                imageUrls: responseData.response.imageUrls
+            };
+        } else {
+            throw new Error('Message processing is not yet complete.');
+        }
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
+export {getStory, getGeneratedImages, sendMessageMJ, retrieveMessageMJ}
 
 
