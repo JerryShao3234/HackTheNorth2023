@@ -12,7 +12,6 @@ export default function Prompt() {
     const navigate = useNavigate();
 
     const [inputText, setInputText] = React.useState("");
-    const [storyText, setStoryText] = React.useState("");
 
     const submitInput = async (input) => {
         if (input.length === 0) {
@@ -20,7 +19,7 @@ export default function Prompt() {
         }
 
         getStory(input).then((story) => {
-            setStoryText(story);
+            navigate("/story", {state: {story: story}})
         }).catch((err) => {
             console.log(err);
         });
@@ -70,12 +69,6 @@ export default function Prompt() {
                     onChange={(e) => setInputText(e.target.value)}
                 />
             </Box>
-
-            {storyText !== "" &&
-                <Box sx={{ py: '5%', px: '3%', bgcolor: 'primary.main'}}>
-                    {storyText}
-                </Box>
-            }
 
         </div>
     )

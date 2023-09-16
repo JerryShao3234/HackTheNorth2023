@@ -37,7 +37,7 @@ const theme = createTheme({
   },
   button: {
     round: {
-        
+
     },
   }
 });
@@ -46,7 +46,7 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
-            <Box sx={{ py: '5%', px: '10%', bgcolor: 'primary.main', height:'100vh'}}>            
+            <Box sx={{ py: '5%', px: '10%', bgcolor: 'primary.main', height:'100vh'}}>
 
             <Routes>
                 <Route key="home" exact path="/" element={<Home/>}/>,
