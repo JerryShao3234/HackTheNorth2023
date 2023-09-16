@@ -30,18 +30,23 @@ export default function Story() {
 
     const [imageUrls, setImageUrls] = React.useState([]);
 
-    React.useEffect(() => {
-        getGeneratedImages(story).then((urls) => {
-            setImageUrls(urls);
-        }).catch((err) => {
-            console.log(err);
-        });
+    React.useEffect(async () => {
+        async function getData() {
+            try {
+                const urls = await getGeneratedImages(story);
+                setImageUrls(urls);
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
+        getData();
     }, []);
 
     if (imageUrls.length === 0) {
         return (
             <div className="loading">
-                <ReactLoading type={"balls"} color={"#5d5d5d"} height={"20%"} width={"20%"} />
+                <ReactLoading type={"spin"} color={"#5d5d5d"} height={"20%"} width={"20%"} />
             </div>
         );
     } else {
@@ -93,7 +98,9 @@ export default function Story() {
                     {pages.map((page, index) => {
                         return (
                             <Page number={index + 1} key={index}>
-                                <img src={page.imageUrl} alt={"page " + (index + 1)}/>
+                                <div>
+                                    <img src={page.imageUrl} alt={"page " + (index + 1)}/>
+                                </div>
                                 <div>{page.paragraph}</div>
                             </Page>
                         )
