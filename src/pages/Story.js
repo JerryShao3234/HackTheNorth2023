@@ -2,6 +2,7 @@ import HTMLFlipBook from "react-pageflip";
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import {useLocation} from "react-router-dom";
+import ReactLoading from 'react-loading';
 import "../App.css"
 
 const PageCover = React.forwardRef((props, ref) => {
@@ -17,23 +18,16 @@ const PageCover = React.forwardRef((props, ref) => {
 const Page = React.forwardRef((props, ref) => {
     return (
         <div className="page" ref={ref}>
-            <div className="page-content">
-                <h2 className="page-header">Page header - {props.number}</h2>
-                <div className="page-image"></div>
-                <div className="page-text">{props.children}</div>
-                <div className="page-footer">{props.number + 1}</div>
-            </div>
+            {props.children}
         </div>
     );
 });
 
 export default function Story() {
-    const [inputText, setInputElement] = React.useState("");
-    const [text, setText] = React.useState("ここに表示されます。");
-    const printText = () => {
-        setText(inputText);
-        setInputElement("");
-    };
+    const {state} = useLocation();
+
+    const {story} = state
+    const sentences = story.split(".");
 
     return (
         <div bgcolor="LightCyan">
@@ -51,21 +45,15 @@ export default function Story() {
                 // style={{ margin: "0 auto" }}
                 // className="album-web"
             >
-                <PageCover>try</PageCover>
-                <Page number="1">
-                    <div>TEST 1</div>
-                </Page>
-                <Page number="2">
-                    <div>TEST 1</div>
-                </Page>
-                <Page number="3">
-                    <div>TEST 1</div>
-                </Page>
-                <Page number="4">
-                    <div>TEST 1</div>
-                </Page>
-                {/*<PageCover></PageCover>*/}
-                {/*<PageCover>see you</PageCover>*/}
+                <PageCover>My Story</PageCover>
+                {sentences.map((sentence, index) => {
+                    return (
+                        <Page number={index + 1} key={index}>
+                            <div>{sentence}</div>
+                        </Page>
+                    )
+                })}
+                <PageCover>The End</PageCover>
             </HTMLFlipBook>
         </div>
     );
