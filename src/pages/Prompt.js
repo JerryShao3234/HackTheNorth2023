@@ -4,13 +4,26 @@ import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import TextField from '@mui/material/TextField';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
-// import {submitInput} from '../generate';
+import {getStory} from '../generate';
 import { useNavigate } from "react-router-dom";
+import * as React from 'react';
 
 export default function Prompt() {
     const navigate = useNavigate();
 
-    const submitInput = (input) => {
+    const [inputText, setInputText] = React.useState("");
+    const [storyText, setStoryText] = React.useState("");
+
+    const submitInput = async (input) => {
+        if (input.length === 0) {
+            alert("Please write something!");
+        }
+
+        getStory(input).then((story) => {
+            setStoryText(story);
+        }).catch((err) => {
+            console.log(err);
+        });
     }
 
     return (
@@ -18,12 +31,12 @@ export default function Prompt() {
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
                 {/* <Box sx={{ py: '3%', bgcolor: 'primary.main', height:10}}> */}
-                    <Button 
-                        variant="contained" 
+                    <Button
+                        variant="contained"
                         sx={{borderRadius: 20,
                             bgcolor: "secondary.main",
                             padding: "15px",
-                            fontSize: "1rem"}} 
+                            fontSize: "1rem"}}
                         size="medium"
                         onClick={() => {navigate("../");}} >
                         <ArrowBackIosNewOutlinedIcon/>
@@ -31,20 +44,20 @@ export default function Prompt() {
                 {/* </Box> */}
 
                 {/* <Box sx={{ py: '3%', bgcolor: 'primary.main', height:10}}> */}
-                    <Button 
-                        variant="contained" 
+                    <Button
+                        variant="contained"
                         sx={{borderRadius: 20,
                             bgcolor: "secondary.main",
                             padding: "15px 30px",
-                            fontSize: "1rem"}} 
+                            fontSize: "1rem"}}
                         size="medium"
-                        onClick={() => submitInput("Please explain why Jeff Bezos is rich")} >
+                        onClick={() => submitInput(inputText)} >
                         Create
                     </Button>
                 {/* </Box> */}
 
             </Box>
-            
+
 
             <Box sx={{ py: '5%', px: '3%', bgcolor: 'primary.main'}}>
                 <TextField
@@ -54,11 +67,16 @@ export default function Prompt() {
                     variant="filled"
                     rows={20}
                     sx={{width: '100%', bgcolor: 'secondary.main', color: 'primary.main'}}
+                    onChange={(e) => setInputText(e.target.value)}
                 />
             </Box>
-            
 
-            
+            {storyText !== "" &&
+                <Box sx={{ py: '5%', px: '3%', bgcolor: 'primary.main'}}>
+                    {storyText}
+                </Box>
+            }
+
         </div>
     )
 }
