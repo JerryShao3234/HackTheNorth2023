@@ -197,7 +197,7 @@ const stableDiffusionOptions = {
 
 const getStory = async (text) => {
     const options = {...promptsOptions};
-    options.data.prompt = text;
+    options.data.prompt = "Write a children's story about " + text + " in ten sentences or less";
     options.data.temperature = 1.2;
 
     return axios
