@@ -373,7 +373,7 @@ const sendMessageMJ = async (inputMsg) => {
 };
 
 const retrieveMessageMJ = async (messageId) => {
-    const URL = `https://api.thenextleg.io/v2/message/${messageId}?expireMins=2`;
+    const URL = `https://api.thenextleg.io/v2/message/${messageId}?expireMins=7`;
 
     const options = {
         method: 'GET',

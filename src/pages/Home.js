@@ -13,7 +13,7 @@ export default function Home() {
     return (
         <div>
             <Box sx={{ p: '5%', bgcolor: 'primary.main'}}>
-                <Typography variant="poster">DreamWeawers</Typography>
+                <Typography variant="poster">DreamWeavers</Typography>
                 
                 <Box sx={{ pt: '5%', pb: '10%', bgcolor: 'primary.main', height:10}}>
                     <p>Create a story for your loved ones.</p>
