@@ -1,10 +1,14 @@
 import HTMLFlipBook from "react-pageflip";
 import * as React from 'react';
+import Button from '@mui/material/Button';
+import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
 import {useLocation} from "react-router-dom";
 import ReactLoading from 'react-loading';
 import "../App.css"
 import {getGeneratedImages} from "../generate";
+import DownloadIcon from '@mui/icons-material/Download';
+import styled from "@emotion/styled";
 
 const PageCover = React.forwardRef((props, ref) => {
     return (
@@ -76,10 +80,24 @@ export default function Story() {
             pages.push(pageObject);
         }
 
-
+        const downloadStory = () => {
+            const element = document.createElement("a");
+            const file = new Blob([story], {type: 'text/plain'});
+            element.href = URL.createObjectURL(file);
+            element.download = "story.txt";
+            document.body.appendChild(element); // Required for this to work in FireFox
+            element.click();
+        }
 
         return (
             <div bgcolor="LightCyan">
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', py: '2%' }}>
+                    <Fab variant="extended">
+                    <DownloadIcon sx={{ mr: 1 }} />
+                    Download Story
+                    </Fab>
+                </Box>
+
                 <HTMLFlipBook
                     width={550}
                     height={733}
@@ -99,7 +117,18 @@ export default function Story() {
                         return (
                             <Page number={index + 1} key={index}>
                                 <div>
-                                    <img src={page.imageUrl} alt={"page " + (index + 1)}/>
+                                <Box
+                                    component="img"
+                                    sx={{
+                                        // height: auto,
+                                        width: '100%',
+                                        // maxHeight: { xs: 233, md: 167 },
+                                        // maxWidth: { xs: 350, md: 250 },
+                                    }}
+                                    alt={"page " + (index + 1)}
+                                    src={page.imageUrl}
+                                    />
+                                    {/* <img src={page.imageUrl} alt={"page " + (index + 1)} style={{"height:auto;width:100%;"}}/> */}
                                 </div>
                                 <div>{page.paragraph}</div>
                             </Page>
