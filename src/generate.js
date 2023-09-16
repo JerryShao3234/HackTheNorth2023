@@ -241,7 +241,7 @@ extract the scenes from the story:
 <scene> The bear had a big pot of water boiling on the stove and was just about to drop the three little pigs into the pot 
 <scene> The third little pig made a big bowl of porridge and brought it to the bear
 <scene> The bear was so happy that the bear ate the porridge and forgot all about eating the three little pigs
-<scene> The three little pigs were so happy that they had escaped from the bear, and the three little pigs lived happily ever after
+<scene> The three little pigs were so happy that the three little pigs had escaped from the bear, and the three little pigs lived happily ever after
 
 ---
 Story:
