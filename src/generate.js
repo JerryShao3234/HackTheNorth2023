@@ -128,7 +128,6 @@ const getStory = async (text) => {
         .then(function (response) {
             const storyText = response.data.generations[0].text
 
-            console.log("generated getStory");
             console.log(storyText)
             return storyText
         })
@@ -217,9 +216,6 @@ extract six scenes from the story:
         .request(options)
         .then(async function (response) {
             const prompts = response.data.generations[0].text
-
-            console.log("generated prompts");
-            console.log(prompts)
 
             let promptList = prompts.split("<scene>");
             promptList = promptList.map((prompt) => prompt.trim()).filter((prompt) => prompt !== "").map(

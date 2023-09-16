@@ -31,11 +31,13 @@ export default function Story() {
     const {story} = state
 
     const [imageUrls, setImageUrls] = React.useState([]);
+    const [realStory, setRealStory] = React.useState("");
 
     React.useEffect(async () => {
         async function getData() {
             try {
                 const upscaledStory = await getStory(story);
+                setRealStory(upscaledStory);
                 const urls = await getGeneratedImages(upscaledStory);
                 setImageUrls(urls);
             } catch (err) {
@@ -53,7 +55,7 @@ export default function Story() {
             </Box>
         );
     } else {
-        let sentences = story.split(".");
+        let sentences = realStory.split(".");
         sentences.pop();
         sentences = sentences.map((sentence) => {
             return sentence.trim() + ". "
