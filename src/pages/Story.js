@@ -1,18 +1,12 @@
 import HTMLFlipBook from "react-pageflip";
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
 import {useLocation} from "react-router-dom";
 import ReactLoading from 'react-loading';
 import "../App.css"
-<<<<<<< HEAD
-import {getGeneratedImages} from "../generate";
-import DownloadIcon from '@mui/icons-material/Download';
-import styled from "@emotion/styled";
-=======
 import {getGeneratedImages, getStory} from "../generate";
->>>>>>> 227c257f41d4a65a3fc338bc478d079e13abfd56
+import DownloadIcon from '@mui/icons-material/Download';
 
 const PageCover = React.forwardRef((props, ref) => {
     return (
@@ -114,8 +108,6 @@ export default function Story() {
                     maxShadowOpacity={0.5}
                     showCover={true}
                     flippingTime={1000}
-                    // style={{ margin: "0 auto" }}
-                    // className="album-web"
                 >
                     <PageCover>My Story</PageCover>
                     {pages.map((page, index) => {
@@ -125,15 +117,11 @@ export default function Story() {
                                 <Box
                                     component="img"
                                     sx={{
-                                        // height: auto,
-                                        width: '100%',
-                                        // maxHeight: { xs: 233, md: 167 },
-                                        // maxWidth: { xs: 350, md: 250 },
+                                        width: '100%'
                                     }}
                                     alt={"page " + (index + 1)}
                                     src={page.imageUrl}
                                     />
-                                    {/* <img src={page.imageUrl} alt={"page " + (index + 1)} style={{"height:auto;width:100%;"}}/> */}
                                 </div>
                                 <div>{page.paragraph}</div>
                             </Page>
