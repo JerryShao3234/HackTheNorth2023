@@ -1,11 +1,39 @@
 import './App.css';
-import {submitInput} from './generate'
+import {getStory, getGeneratedImages} from './generate'
+import {useState} from "react";
 
 function App() {
+    const [text, setText] = useState("")
+    const [imageURLs, setImageURLs] = useState([])
+
+    const processInput = () => {
+        getStory("Write a children's book about a knight and a dragon in ten or less sentences with simple vocabulary").then((response) => {
+            setText(response);
+            return getGeneratedImages(response);
+        }).then((imageURLs) => {
+            console.log(imageURLs)
+            setImageURLs(imageURLs)
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
     return (
         <div className="App">
             Our APP
-            <button onClick={() => submitInput("Please explain why Jeff Bezos is rich")}>generate answer</button>
+            <button onClick={processInput}>generate answer</button>
+            <div>
+                {text}
+            </div>
+            <div>
+                {imageURLs.map((imageURL, index) => {
+                    return (
+                        <div key={index}>
+                            <img src={imageURL} alt={"page " + index}/>
+                        </div>
+                    )
+                })}
+            </div>
         </div>
     );
 }
