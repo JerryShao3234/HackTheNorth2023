@@ -3,10 +3,10 @@ import * as React from 'react';
 import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
 import {useLocation} from "react-router-dom";
-import ReactLoading from 'react-loading';
 import "../App.css"
 import {getGeneratedImages, getStory} from "../generate";
 import DownloadIcon from '@mui/icons-material/Download';
+import { FallingLines } from  'react-loader-spinner'
 
 const PageCover = React.forwardRef((props, ref) => {
     return (
@@ -51,7 +51,12 @@ export default function Story() {
     if (imageUrls.length === 0) {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <ReactLoading type={"spin"} color={"#5d5d5d"} height={120} width={120} />
+                <FallingLines
+                    color="#F3FDE8"
+                    width="200"
+                    visible={true}
+                    ariaLabel='falling-lines-loading'
+                />
             </Box>
         );
     } else {
@@ -114,19 +119,24 @@ export default function Story() {
                     <PageCover>My Story</PageCover>
                     {pages.map((page, index) => {
                         return (
-                            <Page number={index + 1} key={index}>
-                                <div>
-                                <Box
-                                    component="img"
-                                    sx={{
-                                        width: '100%'
-                                    }}
-                                    alt={"page " + (index + 1)}
-                                    src={page.imageUrl}
-                                    />
-                                </div>
-                                <div>{page.paragraph}</div>
-                            </Page>
+                            <Box sx={{boxShadow: 3}}>
+                                <Page number={index + 1} key={index}>
+                                    <Box sx={{ p: '2%' }}>
+                                        <div>
+                                        <Box
+                                            component="img"
+                                            sx={{
+                                                width: '100%'
+                                            }}
+                                            alt={"page " + (index + 1)}
+                                            src={page.imageUrl}
+                                            />
+                                        </div>
+                                        <hr/>
+                                        <div>{page.paragraph}</div>
+                                    </Box>
+                                </Page>
+                            </Box>
                         )
                     })}
                     <PageCover>The End</PageCover>
