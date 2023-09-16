@@ -383,16 +383,18 @@ const retrieveMessageMJ = async (messageId) => {
             authorization: `Bearer ${midjourneyKey}`
         }
     }
-
+    let delay = 1000;
     try {
         while (true) {
             console.log("polling");
-            await wait(2000);
+            await wait(delay);
 
             const response = await axios.request(options);
             const responseData = response.data;
             if (responseData.progress === 100) {
                 return responseData.response.imageUrls[0]
+            } else {
+                delay = delay * 2;
             }
         }
     } catch (error) {
