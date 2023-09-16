@@ -313,22 +313,26 @@ extract the scenes from the story:
 
             let resultPromises = []
 
-            for (let i = 0; i < promptList.length; i++) {
-                const realPrompt = promptList[i] + ", drawn by a child, watercolor --q .25"
+            for (let i = 0; i < promptList.length; i += 3) {
+                const imagePromises = promptList.slice(i, i + 3).map((prompt) => {
+                    const realPrompt = prompt + ", drawn by a child, watercolor --q .25"
 
-                const imagePromise = sendMessageMJ(realPrompt).then(async (messageId) => {
-                    await wait(2000);
-                    return retrieveMessageMJ(messageId);
-                }).then((url) => {
-                    return url
+                    return sendMessageMJ(realPrompt).then(async (messageId) => {
+                        await wait(2000);
+                        return retrieveMessageMJ(messageId);
+                    }).then((url) => {
+                        return url
+                    })
                 })
 
-                resultPromises.push(imagePromise)
 
-                await wait(800);
+
+                resultPromises = resultPromises.concat(await Promise.all(imagePromises))
+
+                // await wait(800);
             }
 
-            return await Promise.all(resultPromises);
+            return resultPromises
         })
         .catch(function (error) {
             console.error(error);
@@ -380,22 +384,20 @@ const retrieveMessageMJ = async (messageId) => {
         }
     }
 
-
+    try {
         while (true) {
-            try {
-                console.log("polling");
-                await wait(2000);
+            console.log("polling");
+            await wait(2000);
 
-                const response = await axios.request(options);
-                const responseData = response.data;
-                if (responseData.progress === 100) {
-                    return responseData.response.imageUrls[0]
-                }
-            } catch (error) {
-                console.error(error);
-                await wait(1200);
+            const response = await axios.request(options);
+            const responseData = response.data;
+            if (responseData.progress === 100) {
+                return responseData.response.imageUrls[0]
             }
         }
+    } catch (error) {
+        console.error(error);
+    }
 
 };
 
