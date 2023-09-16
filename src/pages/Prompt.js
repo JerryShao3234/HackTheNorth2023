@@ -18,11 +18,7 @@ export default function Prompt() {
             alert("Please write something!");
         }
 
-        getStory(input).then((story) => {
-            navigate("/story", {state: {story: story}})
-        }).catch((err) => {
-            console.log(err);
-        });
+        navigate("/story", {state: {story: input}})
     }
 
     return (
