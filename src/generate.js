@@ -222,7 +222,7 @@ const getGeneratedImages = async (text) => {
 Story:
 Once upon a time, there was a brave knight named Sir Simon. Sir Simon loved his kingdom and would always defend it from harm. One day, Sir Simon heard rumors of a dragon named Merlin, who lived in a cave nearby. Merlin was known to kidnap princesses and take them to his cave. Sir Simon was determined to rescue the princesses and rid the kingdom of Merlin. He armed himself with his sword and set out on his mission. As Sir Simon approached the cave, he saw Merlin flying in the sky. The dragon spotted the knight and swooped down to attack. Sir Simon stood his ground and fought off the dragon. After a long and difficult battle, he was able to slay Merlin and rescue the princesses. The kingdom was overjoyed and held a grand celebration to honor Sir Simon. He was hailed as a hero and lived happily ever after with his kingdom and his bride.
 
-extract the scenes from the story:
+extract six scenes from the story:
 <scene> There was a brave knight
 <scene> A dragon lived in a cave and kidnapped princesses
 <scene> The knight approached the cave armed with the knight's sword
@@ -233,7 +233,7 @@ extract the scenes from the story:
 Story:
 Once upon a time, three little pigs were living in a cozy little house in the woods. Each pig had its own favorite thing to do. The first little pig liked to read books, the second little pig liked to play with toys, and the third little pig liked to cook. One day, a big bad bear came along and knocked on the door of their house. He said he wanted to eat the three little pigs for dinner. The first little pig was so scared that he ran all the way to his brother's house. The second little pig was so scared that he ran all the way to his sister's house. The third little pig was so scared that he ran all the way to the bear's house. The bear had a big pot of water boiling on the stove, and he was just about to drop the three little pigs into the pot when the third little pig said, "Wait! I can make a better dinner than you can." The bear was so surprised that he let the third little pig go. The third little pig went back to his house and got some food from the refrigerator. He made a big bowl of porridge and brought it to the bear's house. The bear was so happy that he ate the porridge and forgot all about eating the three little pigs. The three little pigs were so happy that they had escaped from the bear, and they lived happily ever after. 
 
-extract the scenes from the story: 
+extract six scenes from the story: 
 <scene> Three little pigs lived in a cozy little house in the woods
 <scene> A big bad bear came along and knocked on the door of the pig's house
 <scene> The bear had a big pot of water boiling on the stove and was just about to drop the three little pigs into the pot 
@@ -245,7 +245,7 @@ extract the scenes from the story:
 Story:
 Once upon a time, a hedgehog and a frog met and became friends. They would spend their days exploring the forest and playing together. One sunny day, they decided to go for a swim in the river. The hedgehog was a great swimmer, and the frog was happy to join him. They had so much fun splashing around and chasing each other. They even found a big rock to sit on and rest. The hedgehog and the frog were the best of friends, and they enjoyed spending time together, no matter what they were doing.
 
-extract the scenes from the story: 
+extract six scenes from the story: 
 <scene> A hedgehog and a frog became friends
 <scene> The hedgehog and frog would spend the day exploring the forest and playing games
 <scene> The hedgehog and frog went for a swim in the river
@@ -257,7 +257,7 @@ extract the scenes from the story:
 Story:
 Once upon a time, there was a peaceful kingdom that was often visited by a powerful wizard. One day, the wizard was flying over the kingdom's castle when he saw a strange cloud formation in the distance. As he got closer, he realized that it was not a cloud at all, but a giant dragon! The dragon was flying towards the castle, and the wizard could see that it was causing a huge thunderstorm. The dragon's wings were beating so hard that they were creating strong winds, and its fiery breath was turning the rain into huge bolts of lightning. The wizard knew he had to do something to stop the dragon, so he cast a powerful spell that made the dragon's wings too heavy to fly. The dragon crashed to the ground, and the thunderstorm finally stopped. The wizard was a hero, and the kingdom was safe once again. The people of the kingdom thanked the wizard for his bravery and for saving their kingdom from the dragon's thunderstorm.
 
-extract the scenes from the story: 
+extract six scenes from the story: 
 <scene> A peaceful kingdom was often visited by a powerful wizard
 <scene> The wizard saw a strange cloud formation in the distance
 <scene> The dragon was flying towards the castle, and the wizard could see that the dragon was causing a huge thunderstorm
@@ -269,7 +269,7 @@ extract the scenes from the story:
 Story:
 Once upon a time, in a magical forest, there grew a mysterious mushroom. The mushroom was no ordinary fungus, for it had the power to reveal the future. Those who were brave enough to pluck the mushroom and eat it would gain insight into what tomorrow may bring. Some believed that the mushroom brought good luck, while others were skeptical, claiming that it was just a myth. A young girl named Lily wanted to find out for herself. She ventured deep into the forest, searching for the mysterious mushroom. At last, she found it, glowing brightly in the shadows. With a hesitant heart, she plucked it and brought it home. Her parents were skeptical, but they let her eat it anyway. That night, Lily had the most amazing dreams. She saw herself doing things she had never done before, meeting new people, and going on adventures. When she woke up, she knew that the mushroom had given her a glimpse of her future. From that day on, Lily visited the magical forest often, seeking out the mysterious mushroom. Each time she ate it, she gained a little more insight into what her future held. She knew that it was not just a myth, but a powerful tool that could help her make the most of her life.
 
-extract the scenes from the story: 
+extract six scenes from the story: 
 <scene> Once upon a time, in a magical forest, there grew a mysterious mushroom
 <scene> The mushroom had the power to reveal the future
 <scene> The girl ventured into the forest
@@ -281,7 +281,7 @@ extract the scenes from the story:
 Story:
 ${text}
 
-extract the scenes from the story:
+extract six scenes from the story:
 `
 
     const options = {...promptsOptions}
@@ -308,17 +308,27 @@ extract the scenes from the story:
             console.log(promptList)
 
             let resultPromises = []
-            const waitTime = (promptList.length + 1) * 1100
+            const waitTime = (promptList.length + 1) * 2400
 
             for (let i = 0; i < promptList.length; i++) {
-                const realPrompt = promptList[i] + ", drawn by a child, watercolor --q .25"
+                resultPromises.push("")
+            }
 
-                resultPromises.push(sendMessageMJ(realPrompt).then(async (messageId) => {
-                    await wait(500);
-                    return retrieveMessageMJ(messageId, waitTime);
-                }).then((url) => {
-                    return url
-                }))
+            for (let i = 0; i < promptList.length; i++) {
+                setTimeout(() => {
+                    const realPrompt = promptList[i] + ", drawn by a child, watercolor --q .25"
+
+                    sendMessageMJ(realPrompt).then(async (messageId) => {
+                        if (messageId === undefined) {
+                            return "Image failed to generate"
+                        }
+
+                        await wait(1100);
+                        return retrieveMessageMJ(messageId, waitTime);
+                    }).then((url) => {
+                        resultPromises[i] = url
+                    })
+                }, (i + 1) * 2400)
 
                 //
                 // const imagePromises = promptList.slice(i, i + 3).map((prompt) => {
@@ -336,10 +346,17 @@ extract the scenes from the story:
 
                 // resultPromises = resultPromises.concat(await Promise.all(imagePromises))
 
-                await wait(1100);
+                //await wait(1100);
             }
 
-            return await Promise.all(resultPromises)
+            while (resultPromises.includes("")) {
+                await wait(2000);
+                console.log("Checking if all images are done")
+            }
+
+            console.log(resultPromises)
+
+            return resultPromises
         })
         .catch(function (error) {
             console.error(error);
@@ -370,6 +387,7 @@ const sendMessageMJ = async (inputMsg) => {
     try {
         const response = await axios.request(options);
         if (response.data.success) {
+            console.log(response.data)
             return response.data.messageId;
         } else {
             throw new Error('Failed to send message.');
@@ -393,7 +411,7 @@ const retrieveMessageMJ = async (messageId, waitTime) => {
 
     try {
         while (true) {
-            console.log("polling");
+            console.log("polling for " + messageId);
             await wait(waitTime);
 
             const response = await axios.request(options);
