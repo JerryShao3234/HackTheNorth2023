@@ -325,7 +325,7 @@ extract the scenes from the story:
 
                 resultPromises.push(imagePromise)
 
-                await wait(400);
+                await wait(800);
             }
 
             return await Promise.all(resultPromises);
@@ -380,20 +380,23 @@ const retrieveMessageMJ = async (messageId) => {
         }
     }
 
-    try {
-        while (true) {
-            console.log("polling");
-            await wait(1000);
 
-            const response = await axios.request(options);
-            const responseData = response.data;
-            if (responseData.progress === 100) {
-                return responseData.response.imageUrls[0]
+        while (true) {
+            try {
+                console.log("polling");
+                await wait(2000);
+
+                const response = await axios.request(options);
+                const responseData = response.data;
+                if (responseData.progress === 100) {
+                    return responseData.response.imageUrls[0]
+                }
+            } catch (error) {
+                console.error(error);
+                await wait(1200);
             }
         }
-    } catch (error) {
-        console.error(error);
-    }
+
 };
 
 const wait = function (ms) {
