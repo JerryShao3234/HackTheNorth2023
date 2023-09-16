@@ -38,7 +38,8 @@
 }
 
 .cover {
-  background-color: bisque;
+  background: url("../src/images/book-cover.jpeg") no-repeat center center fixed;
+  background-size: cover;
 }
 
 .page {

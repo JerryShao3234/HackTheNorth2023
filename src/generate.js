@@ -337,6 +337,7 @@ const retrieveMessageMJ = async (messageId, waitTime) => {
 
             const response = await axios.request(options);
             const responseData = response.data;
+            console.log(response.data)
             if (responseData.progress === 100) {
                 return responseData.response.imageUrls[0]
             }

@@ -5,7 +5,7 @@ import Story from './pages/Story.js';
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Box from '@mui/material/Box';
 import * as React from 'react';
-import {Route, Routes, useNavigate} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 
 
 const theme = createTheme({
