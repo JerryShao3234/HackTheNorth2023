@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import {useLocation} from "react-router-dom";
 import ReactLoading from 'react-loading';
 import "../App.css"
-import {getGeneratedImages} from "../generate";
+import {getGeneratedImages, getStory} from "../generate";
 
 const PageCover = React.forwardRef((props, ref) => {
     return (
@@ -33,7 +33,8 @@ export default function Story() {
     React.useEffect(async () => {
         async function getData() {
             try {
-                const urls = await getGeneratedImages(story);
+                const upscaledStory = await getStory(story);
+                const urls = await getGeneratedImages(upscaledStory);
                 setImageUrls(urls);
             } catch (err) {
                 console.log(err)
@@ -45,9 +46,9 @@ export default function Story() {
 
     if (imageUrls.length === 0) {
         return (
-            <div className="loading">
-                <ReactLoading type={"spin"} color={"#5d5d5d"} height={"20%"} width={"20%"} />
-            </div>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <ReactLoading type={"spin"} color={"#5d5d5d"} height={120} width={120} />
+            </Box>
         );
     } else {
         let sentences = story.split(".");
