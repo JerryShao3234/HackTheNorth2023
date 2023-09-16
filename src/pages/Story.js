@@ -6,6 +6,10 @@ import {useLocation} from "react-router-dom";
 import "../App.css"
 import {getGeneratedImages, getStory} from "../generate";
 import DownloadIcon from '@mui/icons-material/Download';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import { saveAs } from 'file-saver';
+
 import { FallingLines } from  'react-loader-spinner'
 
 const PageCover = React.forwardRef((props, ref) => {
@@ -32,6 +36,7 @@ export default function Story() {
 
     const [imageUrls, setImageUrls] = React.useState([]);
     const [realStory, setRealStory] = React.useState("");
+    const [pdf, setPdf] = React.useState(null);
 
     React.useEffect(() => {
         // Define an async function within the useEffect
@@ -87,20 +92,45 @@ export default function Story() {
             pages.push(pageObject);
         }
 
-        const downloadStory = () => {
-            const element = document.createElement("a");
-            const file = new Blob([story], {type: 'text/plain'});
-            element.href = URL.createObjectURL(file);
-            element.download = "story.txt";
-            document.body.appendChild(element); // Required for this to work in FireFox
-            element.click();
-        }
+        const downloadStory = async () => {
+            const pdfDoc = new jsPDF();
+            console.log("downloading");
+        
+            for (let index = 0; index < imageUrls.length; index++) {
+                const imageUrl = imageUrls[index];
+        
+                const img = new Image();
+                img.src = imageUrl;
+        
+                // Wait for the image to load
+                await new Promise((resolve) => {
+                    img.onload = resolve;
+                });
+        
+                //save the image into a pdf file
+            
+                pdfDoc.addImage(img, 'JPEG', 10, 10, 90, 0);
+                
+                if(index < imageUrls.length - 1) {
+                    pdfDoc.addPage();
+                }
+    
+            }
+        
+            // Add a page with text
+            pdfDoc.addPage();
+            pdfDoc.text(10, 10, realStory, {maxWidth: 180});
+        
+            // Save the PDF using FileSaver.js
+            const pdfBlob = pdfDoc.output('blob');
+            saveAs(pdfBlob, 'story.pdf');
+        };
 
         return (
             <div bgcolor="LightCyan">
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', py: '2%' }}>
-                    <Fab variant="extended">
-                    <DownloadIcon sx={{ mr: 1 }} />
+                    <Fab variant="extended" onClick={downloadStory}>
+                    <DownloadIcon sx={{ mr: 1 }}/>
                     Download Story
                     </Fab>
                 </Box>
