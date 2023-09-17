@@ -149,12 +149,13 @@ export default function Story() {
 
                 <HTMLFlipBook
                     width={550}
-                    height={600}
+                    height={700}
+
                     size="stretch"
                     minWidth={315}
                     maxWidth={1000}
                     minHeight={400}
-                    maxHeight={1533}
+                    // maxHeight={1533}
                     maxShadowOpacity={0.5}
                     showCover={true}
                     flippingTime={1000}
@@ -175,8 +176,10 @@ export default function Story() {
                                             src={page.imageUrl}
                                             />
                                         </div>
-                                        <hr/>
-                                        <div>{page.paragraph}</div>
+                                        <div className="page-paragraph">{page.paragraph}</div>
+                                        <div className="page-footer">
+                                            {index + 1}
+                                        </div>
                                     </Box>
                                 </Page>
                             </Box>

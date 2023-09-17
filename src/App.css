@@ -40,11 +40,36 @@
 }
 
 .cover {
-  background: url("../src/images/book-cover.jpeg") no-repeat center center fixed;
+  background: url("../src/images/book-cover3.jpeg") no-repeat center center fixed;
   background-size: cover;
+  box-shadow: 5;
 }
 
 .page {
   background-color: white;
   border: 1px solid #c2b5a3;
+  height: 100%;
+  box-shadow: 5;
+}
+
+.page-paragraph {
+  /* height: 100%; */
+  flex-grow: 1;
+  text-align: justify;
+  margin: 10px 0;
+  padding: 15px 0;
+  box-sizing: border-box;
+  border-top: 1px solid #FFD9B7;
+  line-height: 150%;
+}
+
+.page-footer {
+    height: 30px;
+    border-top: 1px solid #FFD9B7;
+    font-size: 80%;
+    position: absolute;
+    bottom: 0;
+    /* display: block; */
+    width: 96%;
+    overflow: hidden
 }
