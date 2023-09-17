@@ -3,8 +3,12 @@ import React, { useState, useEffect } from 'react';
 const TextCarousel = () => {
     const messages = [
         "Generating your story...",
-        "Taking washroom break...",
-        "Drawing the pictures....",
+        "Coming up with a plot...",
+        "Thinking up a moral to the story...",
+        "Building up the suspense...",
+        "Adding the unexpected plot twist...",
+        "Taking a washroom break...",
+        "Making the illustrations....",
         "Procrastinating...",
         "Scrolling on TikTok..."
     ];
