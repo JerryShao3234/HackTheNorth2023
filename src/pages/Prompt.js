@@ -1,10 +1,8 @@
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import TextField from '@mui/material/TextField';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
-import {getStory} from '../generate-text';
 import { useNavigate } from "react-router-dom";
 import * as React from 'react';
 
@@ -26,18 +24,14 @@ export default function Prompt() {
 
     return (
         <div>
-
             <Box sx={{ py: '5%', px: '3%', bgcolor: 'primary.main'}}>
-
-                {/* <Box sx={{ py: '3%', bgcolor: 'primary.main', height:10}}> */}
-                    <Button
-                        variant="round"
-                        size="medium"
-                        sx = {{mb: 2}}
-                        onClick={() => {navigate("../");}} >
-                        <ArrowBackIosNewOutlinedIcon/>
-                    </Button>
-                {/* </Box> */}
+                <Button
+                    variant="round"
+                    size="medium"
+                    sx = {{mb: 2}}
+                    onClick={() => {navigate("../");}} >
+                    <ArrowBackIosNewOutlinedIcon/>
+                </Button>
 
                 <TextField
                     id="filled-multiline-flexible"
@@ -50,19 +44,14 @@ export default function Prompt() {
                 />
 
                 <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end',  }}>
-
-                    {/* <Box sx={{ py: '3%', bgcolor: 'primary.main', height:10}}> */}
-                        <Button
-                            variant="round"
-                            size="medium"
-                            onClick={() => submitInput(inputText)} >
-                            Create
-                        </Button>
-                    {/* </Box> */}
+                    <Button
+                        variant="round"
+                        size="medium"
+                        onClick={() => submitInput(inputText)} >
+                        Create
+                    </Button>
                 </Box>
             </Box>
-
-
         </div>
     )
 }

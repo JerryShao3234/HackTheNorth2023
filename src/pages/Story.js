@@ -4,7 +4,7 @@ import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
 import {useLocation} from "react-router-dom";
 import "../App.css"
-import {getGeneratedImages, getStory} from "../generate-text";
+import {getGeneratedImages, getStory, getTitle} from "../generate-text";
 import DownloadIcon from '@mui/icons-material/Download';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import jsPDF from 'jspdf';
@@ -13,13 +13,11 @@ import {generateVoice} from "../generate-voice";
 
 import { FallingLines } from  'react-loader-spinner'
 
-// doesnt make sense that when react refreshses, the midjourney
-
 const PageCover = React.forwardRef((props, ref) => {
     return (
         <div className="cover" id="cover" ref={ref} data-density="hard">
-            <div>
-                <h2>{props.children}</h2>
+            <div className="title-container">
+                <span className="title">{props.children}</span>
             </div>
         </div>
     );
@@ -40,7 +38,8 @@ export default function Story() {
     const [imageUrls, setImageUrls] = React.useState([]);
     const [realStory, setRealStory] = React.useState("");
     const [currentPageIndex, setCurrentPageIndex] = React.useState(0);
-    
+    const [realTitle, setRealTitle] = React.useState("");
+    const [pdf, setPdf] = React.useState(null);
 
     React.useEffect(() => {
         // Define an async function within the useEffect
@@ -50,8 +49,12 @@ export default function Story() {
                 setRealStory(upscaledStory);
                 const urls = await getGeneratedImages(upscaledStory);
                 setImageUrls(urls);
+                const title = await getTitle(upscaledStory);
+                setRealTitle(title);
+                console.log(title);
 
                 localStorage.setItem("story", upscaledStory);
+                localStorage.setItem("title", title);
                 localStorage.setItem("imageUrls", JSON.stringify(urls));
             } catch (err) {
                 console.log(err)
@@ -60,11 +63,13 @@ export default function Story() {
 
         const cacheStory = localStorage.getItem("story");
         const cacheImageUrls = localStorage.getItem("imageUrls");
+        const cacheTitle = localStorage.getItem("title");
 
-        if (cacheStory !== "undefined" && cacheImageUrls !== "undefined") {
+        if (cacheStory !== "undefined" && cacheImageUrls !== "undefined" && cacheTitle !== "undefined") {
             console.log("cache hit")
             setRealStory(cacheStory);
             setImageUrls(JSON.parse(cacheImageUrls));
+            setRealTitle(cacheTitle);
         } else {
             getData();
         }
@@ -72,15 +77,19 @@ export default function Story() {
     }, []);
 
 
-    if (imageUrls.length === 0) {
+    if (imageUrls.length === 0 || realTitle === "") {
         return (
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                 <FallingLines
                     color="#F3FDE8"
                     width="200"
                     visible={true}
                     ariaLabel='falling-lines-loading'
                 />
+
+                <div>
+                    <h1>Generating your story...</h1>
+                </div>
             </Box>
         );
     } else {
@@ -150,7 +159,7 @@ export default function Story() {
         }
 
         return (
-            <div bgcolor="LightCyan">
+            <div bgcolor="LightCyan" className="giant-container">
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', py: '2%' }}>
                     <Fab variant="extended" onClick={downloadStory}>
                     <DownloadIcon sx={{ mr: 2 }}/>
@@ -161,36 +170,39 @@ export default function Story() {
                     Speak
                     </Fab>
                 </Box>
-
+            
                 <HTMLFlipBook
                     width={550}
-                    height={700}
+                    height={650}
 
                     size="stretch"
                     minWidth={315}
                     maxWidth={1000}
                     minHeight={400}
-                    // maxHeight={1533}
+                    maxHeight={1533}
                     maxShadowOpacity={0.5}
                     showCover={true}
-                    flippingTime={1000}
+                    flippingTime={800}
                     onFlip={(e) => setCurrentPageIndex(e.data)}
                 >
-                    <PageCover>My Story</PageCover>
+                    <PageCover>
+                        {realTitle !== "" ? realTitle : "My Story"}
+                    </PageCover>
                     {pages.map((page, index) => {
                         return (
                             <Box sx={{boxShadow: 3}} key={index}>
                                 <Page number={index + 1}>
-                                    <Box sx={{ p: '2%' }}>
-                                        <div>
-                                        <Box
-                                            component="img"
-                                            sx={{
-                                                width: '100%'
-                                            }}
-                                            alt={"page " + (index + 1)}
-                                            src={page.imageUrl}
-                                            />
+                                    <Box sx={{ p: '5%' }}>
+                                        <div className="image-container">
+                                            <Box
+                                                className="page-image"
+                                                component="img"
+                                                sx={{
+                                                    width: '100%'
+                                                }}
+                                                alt={"page " + (index + 1)}
+                                                src={page.imageUrl}
+                                                />
                                         </div>
                                         <div className="page-paragraph">{page.paragraph}</div>
                                         <div className="page-footer">
@@ -201,7 +213,15 @@ export default function Story() {
                             </Box>
                         )
                     })}
-                    <PageCover>The End</PageCover>
+                    <PageCover>
+                        <div>The End</div>
+                        <Box>
+                            <Fab variant="extended" onClick={downloadStory}>
+                                <DownloadIcon sx={{ mr: 1 }}/>
+                                Download
+                            </Fab>
+                        </Box>
+                    </PageCover>
                 </HTMLFlipBook>
             </div>
         );
