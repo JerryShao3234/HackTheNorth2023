@@ -4,7 +4,7 @@ import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
 import {useLocation} from "react-router-dom";
 import "../App.css"
-import {getGeneratedImages, getStory} from "../generate";
+import {getGeneratedImages, getStory, getTitle} from "../generate";
 import DownloadIcon from '@mui/icons-material/Download';
 import jsPDF from 'jspdf';
 import { saveAs } from 'file-saver';
@@ -35,6 +35,8 @@ export default function Story() {
 
     const [imageUrls, setImageUrls] = React.useState([]);
     const [realStory, setRealStory] = React.useState("");
+    const [realTitle, setRealTitle] = React.useState("");
+    const [pdf, setPdf] = React.useState(null);
 
     React.useEffect(() => {
         // Define an async function within the useEffect
@@ -44,8 +46,12 @@ export default function Story() {
                 setRealStory(upscaledStory);
                 const urls = await getGeneratedImages(upscaledStory);
                 setImageUrls(urls);
+                const title = await getTitle(upscaledStory);
+                setRealTitle(title);
+                console.log(title);
 
                 localStorage.setItem("story", upscaledStory);
+                localStorage.setItem("title", title);
                 localStorage.setItem("imageUrls", JSON.stringify(urls));
             } catch (err) {
                 console.log(err)
@@ -54,11 +60,13 @@ export default function Story() {
 
         const cacheStory = localStorage.getItem("story");
         const cacheImageUrls = localStorage.getItem("imageUrls");
+        const cacheTitle = localStorage.getItem("title");
 
-        if (cacheStory !== "undefined" && cacheImageUrls !== "undefined") {
+        if (cacheStory !== "undefined" && cacheImageUrls !== "undefined" && cacheTitle !== "undefined") {
             console.log("cache hit")
             setRealStory(cacheStory);
             setImageUrls(JSON.parse(cacheImageUrls));
+            setRealTitle(cacheTitle);
         } else {
             getData();
         }
@@ -66,7 +74,7 @@ export default function Story() {
     }, []);
 
 
-    if (imageUrls.length === 0) {
+    if (imageUrls.length === 0 || realTitle === "") {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <FallingLines
@@ -161,7 +169,7 @@ export default function Story() {
                     flippingTime={1000}
                 >
                     <PageCover>
-                        My Story
+                        {realTitle != "" ? realTitle : "My Story"}
                     </PageCover>
                     {pages.map((page, index) => {
                         return (
