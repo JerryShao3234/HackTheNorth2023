@@ -175,16 +175,17 @@ export default function Story() {
                         return (
                             <Box sx={{boxShadow: 3}} key={index}>
                                 <Page number={index + 1}>
-                                    <Box sx={{ p: '2%' }}>
-                                        <div>
-                                        <Box
-                                            component="img"
-                                            sx={{
-                                                width: '100%'
-                                            }}
-                                            alt={"page " + (index + 1)}
-                                            src={page.imageUrl}
-                                            />
+                                    <Box sx={{ p: '5%' }}>
+                                        <div className="image-container">
+                                            <Box
+                                                className="page-image"
+                                                component="img"
+                                                sx={{
+                                                    width: '100%'
+                                                }}
+                                                alt={"page " + (index + 1)}
+                                                src={page.imageUrl}
+                                                />
                                         </div>
                                         <div className="page-paragraph">{page.paragraph}</div>
                                         <div className="page-footer">
