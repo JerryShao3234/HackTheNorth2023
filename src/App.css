@@ -129,10 +129,9 @@ body {
     display: flex;
 }
 
-.mascot {
-  position: absolute;
-  bottom: 0;
-  right: 0;
+.owl-home {
+  position: relative;
+  top: 150px;
 }
 
 .main_title {

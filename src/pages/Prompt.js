@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-
+import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import { useNavigate } from "react-router-dom";
@@ -25,32 +25,42 @@ export default function Prompt() {
     return (
         <div>
             <Box sx={{ py: '5%', px: '3%', bgcolor: 'primary.main'}}>
-                <Button
-                    variant="round"
-                    size="medium"
-                    sx = {{mb: 2}}
-                    onClick={() => {navigate("../");}} >
-                    <ArrowBackIosNewOutlinedIcon/>
-                </Button>
-
-                <TextField
-                    id="filled-multiline-flexible"
-                    label="Write a story about ..."
-                    multiline
-                    variant="filled"
-                    rows={20}
-                    sx={{width: '100%', bgcolor: 'secondary.main', color: 'primary.main'}}
-                    onChange={(e) => setInputText(e.target.value)}
-                />
-
-                <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end',  }}>
+            <Grid container spacing={2}>
+                <Grid item xs={3}>
+                    <img className="owl-prompt" src="https://media.giphy.com/media/0JWCkLbDhCQiajoqJo/giphy.gif" alt="owl" width='100%'/>
+                </Grid>
+                <Grid item xs={9}>
                     <Button
                         variant="round"
                         size="medium"
-                        onClick={() => submitInput(inputText)} >
-                        Create
+                        sx = {{mb: 2}}
+                        onClick={() => {navigate("../");}} >
+                        <ArrowBackIosNewOutlinedIcon/>
                     </Button>
-                </Box>
+
+                    
+
+                    <TextField
+                        id="filled-multiline-flexible"
+                        label="Write a story about ..."
+                        multiline
+                        variant="filled"
+                        rows={20}
+                        sx={{width: '100%', bgcolor: 'secondary.main', color: 'primary.main'}}
+                        onChange={(e) => setInputText(e.target.value)}
+                    />
+
+                    <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end',  }}>
+                        <Button
+                            variant="round"
+                            size="medium"
+                            onClick={() => submitInput(inputText)} >
+                            Create
+                        </Button>
+                    </Box>
+                </Grid>
+            </Grid>
+                
             </Box>
         </div>
     )

@@ -40,9 +40,11 @@ export default function Home() {
                                 Get Started
                             </Button>
                         </Box>
+                        
+                        
                     </Box>
                     <Box className="main-image" sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                        <img className='mascot' width={500} src={koala} alt="koala" />
+                        <img className='owl-home' src="https://media.giphy.com/media/eckgbniZRQdY0Txx5B/giphy.gif"/>
                     </Box>
                 </Box>
             </Box>
