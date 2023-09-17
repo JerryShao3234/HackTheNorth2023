@@ -76,13 +76,17 @@ export default function Story() {
 
     if (imageUrls.length === 0 || realTitle === "") {
         return (
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                 <FallingLines
                     color="#F3FDE8"
                     width="200"
                     visible={true}
                     ariaLabel='falling-lines-loading'
                 />
+
+                <div>
+                    <h1>Generating your story...</h1>
+                </div>
             </Box>
         );
     } else {
