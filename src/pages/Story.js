@@ -49,6 +49,7 @@ export default function Story() {
     const [realStory, setRealStory] = React.useState("");
     const [currentPageIndex, setCurrentPageIndex] = React.useState(0);
     const [realTitle, setRealTitle] = React.useState("");
+    const [utterance, setUtterance] = React.useState(null);
     const [pdf, setPdf] = React.useState(null);
 
     const goToPromptPage = () => {
@@ -74,6 +75,14 @@ export default function Story() {
                 console.log(err)
             }
         }
+
+        const msg = new SpeechSynthesisUtterance();
+        msg.voiceURI = 'native';
+        msg.volume = 1; // 0 to 1
+        msg.rate = 0.8; // 0.1 to 10
+        msg.pitch = 1; //0 to 2
+        msg.lang = 'en-US';
+        setUtterance(msg);
 
         const cacheStory = localStorage.getItem("story");
         const cacheImageUrls = localStorage.getItem("imageUrls");
@@ -169,12 +178,12 @@ export default function Story() {
         };
 
         const generateSpeech = () => {
-            generateVoice(pages, currentPageIndex-1);
+            generateVoice(pages, currentPageIndex-1, utterance);
         }
 
         return (
             <div bgcolor="LightCyan" className="giant-container">
-                
+
                 <Box sx={{ display: 'flex', flexDirection: "column",justifyContent: 'flex-end', p: '2%' }}>
                     <img src="https://media.giphy.com/media/asCRsWMrcEdD7cvt2W/giphy.gif" className="owl-story" alt="owl"/>
                     
