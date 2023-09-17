@@ -5,7 +5,7 @@ import Story from './pages/Story.js';
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Box from '@mui/material/Box';
 import * as React from 'react';
-import {Route, Routes, useNavigate} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 
 
 const theme = createTheme({
@@ -55,7 +55,6 @@ const theme = createTheme({
   });
 
 function App() {
-
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ py: '5%', px: '10%', bgcolor: 'primary.main', height:'100vh'}}>

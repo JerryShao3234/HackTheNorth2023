@@ -147,29 +147,22 @@ export default function Story() {
         };
 
         return (
-            <div bgcolor="LightCyan">
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end', py: '2%' }}>
-                    <Fab variant="extended" onClick={downloadStory}>
-                    <DownloadIcon sx={{ mr: 1 }}/>
-                    Download Story
-                    </Fab>
-                </Box>
-
+            <div bgcolor="LightCyan" className="giant-container">
                 <HTMLFlipBook
                     width={550}
-                    height={700}
+                    height={650}
 
                     size="stretch"
                     minWidth={315}
                     maxWidth={1000}
                     minHeight={400}
-                    // maxHeight={1533}
+                    maxHeight={1533}
                     maxShadowOpacity={0.5}
                     showCover={true}
-                    flippingTime={1000}
+                    flippingTime={800}
                 >
                     <PageCover>
-                        {realTitle != "" ? realTitle : "My Story"}
+                        {realTitle !== "" ? realTitle : "My Story"}
                     </PageCover>
                     {pages.map((page, index) => {
                         return (
@@ -196,7 +189,15 @@ export default function Story() {
                             </Box>
                         )
                     })}
-                    <PageCover>The End</PageCover>
+                    <PageCover>
+                        <div>The End</div>
+                        <Box>
+                            <Fab variant="extended" onClick={downloadStory}>
+                                <DownloadIcon sx={{ mr: 1 }}/>
+                                Download
+                            </Fab>
+                        </Box>
+                    </PageCover>
                 </HTMLFlipBook>
             </div>
         );
