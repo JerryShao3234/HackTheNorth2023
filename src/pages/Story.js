@@ -161,7 +161,10 @@ export default function Story() {
 
         return (
             <div bgcolor="LightCyan" className="giant-container">
+                
                 <Box sx={{ display: 'flex', flexDirection: "column",justifyContent: 'flex-end', p: '2%' }}>
+                    <img src="https://media.giphy.com/media/asCRsWMrcEdD7cvt2W/giphy.gif" className="owl-story" alt="owl"/>
+
                     <Fab variant="extended" onClick={generateSpeech} sx={{ mb: 4 }}>
                         <VolumeUpIcon sx={{ mr: 2 }}/>Speak
                     </Fab>

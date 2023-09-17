@@ -131,6 +131,16 @@
   top: 150px;
 }
 
+.owl-prompt {
+  width: 100%;
+}
+
+.owl-story {
+  position: absolute;
+  top: 150px;
+  width: 10%;
+}
+
 .main_title {
   margin-bottom: 0;
   text-shadow: 5px 5px hsl(209, 43%, 53%);

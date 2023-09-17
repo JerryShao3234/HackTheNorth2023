@@ -27,7 +27,7 @@ export default function Prompt() {
             <Box sx={{ py: '5%', px: '3%', bgcolor: 'primary.main'}}>
             <Grid container spacing={2}>
                 <Grid item xs={3}>
-                    <img className="owl-prompt" src="https://media.giphy.com/media/0JWCkLbDhCQiajoqJo/giphy.gif" alt="owl" width='100%'/>
+                    <img className="owl-prompt" src="https://media.giphy.com/media/0JWCkLbDhCQiajoqJo/giphy.gif" alt="owl"/>
                 </Grid>
                 <Grid item xs={9}>
                     <Button
