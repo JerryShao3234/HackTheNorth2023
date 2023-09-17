@@ -10,6 +10,7 @@ import jsPDF from 'jspdf';
 import { saveAs } from 'file-saver';
 
 import { FallingLines } from  'react-loader-spinner'
+import Typography from "@mui/material/Typography";
 
 const PageCover = React.forwardRef((props, ref) => {
     return (
@@ -85,7 +86,7 @@ export default function Story() {
                 />
 
                 <div>
-                    <h1>Generating your story...</h1>
+                    <Typography variant="rounded">Generating your story...</Typography>
                 </div>
             </Box>
         );
@@ -196,7 +197,15 @@ export default function Story() {
                     <PageCover>
                         <div>The End</div>
                         <Box>
-                            <Fab variant="extended" onClick={downloadStory}>
+                            <Fab variant="extended" sx={{
+                                fontFamily: "'M PLUS Rounded 1c', sans-serif",
+                                fontWeight: 700,
+                                borderRadius: 4,
+                                boxShadow: '0 9px 1px -2px rgba(0, 0, 0, 0.2)',
+                                bgcolor: "secondary.main",
+                                py: 2,
+                                fontSize: "1rem"
+                            }} onClick={downloadStory}>
                                 <DownloadIcon sx={{ mr: 1 }}/>
                                 Download
                             </Fab>
