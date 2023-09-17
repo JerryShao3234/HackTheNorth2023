@@ -53,7 +53,7 @@ export default function Story() {
     const [pdf, setPdf] = React.useState(null);
 
     const goToPromptPage = () => {
-        navigate("/prompt"); 
+        navigate("/prompt");
     };
 
     React.useEffect(() => {
@@ -116,8 +116,8 @@ export default function Story() {
             </Box>
         );
     } else {
+        console.log("realStory: " + realStory);
         let sentences = splitSentence(realStory);
-        sentences.pop();
         sentences = sentences.map((sentence) => {
             return sentence.trim() + ". "
         });
@@ -186,7 +186,7 @@ export default function Story() {
 
                 <Box sx={{ display: 'flex', flexDirection: "column",justifyContent: 'flex-end', p: '2%' }}>
                     <img src="https://media.giphy.com/media/asCRsWMrcEdD7cvt2W/giphy.gif" className="owl-story" alt="owl"/>
-                    
+
                     <Fab variant="extended" onClick={goToPromptPage} sx={{ mb: 4 }}>
                         <ArrowBackIcon sx={{ mr: 2 }}/>Try Again
                     </Fab>
