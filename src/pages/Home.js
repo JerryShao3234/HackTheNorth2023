@@ -23,18 +23,22 @@ export default function Home() {
                         </Box>
 
                         <Box sx={{ py: '8%', bgcolor: 'primary.main', height:10}}>
-                            <Button 
-                                variant="contained" 
-                                sx={{borderRadius: 4,
-                                    boxShadow: '0 9px 1px -2px rgba(0, 0, 0, 0.2)',
-                                    bgcolor: "secondary.main",
-                                    px: 20,
-                                    py: 2,
-                                    fontSize: "1rem"}}
-                                size="medium"
-                                onClick={() => handleRedirectLink("prompt")} >
-                                Get Started
-                            </Button>
+                        <Button 
+                            variant="contained" 
+                            sx={{
+                                fontFamily: "'M PLUS Rounded 1c', sans-serif",
+                                fontWeight: 700,
+                                borderRadius: 4,
+                                boxShadow: '0 9px 1px -2px rgba(0, 0, 0, 0.2)',
+                                bgcolor: "secondary.main",
+                                px: 20,
+                                py: 2,
+                                fontSize: "1rem"
+                            }}
+                            size="medium"
+                            onClick={() => handleRedirectLink("prompt")} >
+                            Get Started
+                        </Button>
                         </Box>
                     </Box>
                     <Box>
