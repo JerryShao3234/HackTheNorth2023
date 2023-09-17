@@ -14,7 +14,7 @@ export default function Home() {
     return (
         <div>
             <Box className="demo-trial" sx={{ displap: '5%', bgcolor: 'primary.main'}}>
-                <Box sx={{display: 'grid', gridTemplateColumns: '2fr 1fr' }}>
+                <Box sx={{display: 'grid', gridTemplateColumns: '2fr 1fr', pt: '100px', pl:'100px' }}>
                     <Box>
                         <Typography className='main_title' variant="title">DreamWeaver</Typography>
 
@@ -22,7 +22,7 @@ export default function Home() {
                             <Typography className='desc' variant="rounded">A different adventure, everytime.</Typography>
                         </Box>
 
-                        <Box className="button-box" sx={{ mt:'0px', pt:'0px', py: '8%', bgcolor: 'primary.main', height:10}}>
+                        <Box className="button-box" sx={{pt:'100px', bgcolor: 'primary.main', height:10}}>
                             <Button
                                 variant="contained"
                                 sx={{
