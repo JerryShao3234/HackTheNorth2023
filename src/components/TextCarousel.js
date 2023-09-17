@@ -28,7 +28,7 @@ const TextCarousel = () => {
         return () => clearInterval(interval);
     }, []);
 
-    return <div style={{ fontFamily: "'M PLUS Rounded 1c', sans-serif" }}>{currentMessage}</div>;
+    return <div style={{ fontFamily: "'M PLUS Rounded 1c', sans-serif", fontSize: "2em" }}>{currentMessage}</div>;
 };
 
 export default TextCarousel;
