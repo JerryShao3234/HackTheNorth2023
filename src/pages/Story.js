@@ -6,13 +6,10 @@ import {useLocation} from "react-router-dom";
 import "../App.css"
 import {getGeneratedImages, getStory} from "../generate";
 import DownloadIcon from '@mui/icons-material/Download';
-import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { saveAs } from 'file-saver';
 
 import { FallingLines } from  'react-loader-spinner'
-
-// doesnt make sense that when react refreshses, the midjourney
 
 const PageCover = React.forwardRef((props, ref) => {
     return (
@@ -38,7 +35,6 @@ export default function Story() {
 
     const [imageUrls, setImageUrls] = React.useState([]);
     const [realStory, setRealStory] = React.useState("");
-    const [pdf, setPdf] = React.useState(null);
 
     React.useEffect(() => {
         // Define an async function within the useEffect
