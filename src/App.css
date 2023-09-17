@@ -111,15 +111,18 @@
 }
 
 .title {
-    font-family: 'Georgia', sans-serif;
+    /* font-family: 'Georgia', sans-serif;
     font-size: 3em;
     font-weight: bold;
     margin: 0;
     padding: 0;
     text-align: center;
-    color: #FFD700;
+    color: #FFD700; */
+    font-size: 3em;
+    color: hsl(209, 43%, 53%);
+    text-shadow: 2px 2px white;
     -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: #858546;
+    /* -webkit-text-stroke-color: #858546; */
 }
 
 .giant-container {

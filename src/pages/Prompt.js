@@ -43,10 +43,13 @@ export default function Prompt() {
                     <TextField
                         id="filled-multiline-flexible"
                         label="Write a story about ..."
+                        InputLabelProps={{
+                            style: { fontSize: '1.5em', fontFamily: "'M PLUS Rounded 1c', sans-serif" }
+                        }}
                         multiline
                         variant="filled"
-                        rows={20}
-                        sx={{width: '100%', bgcolor: 'secondary.main', color: 'primary.main'}}
+                        rows={15}
+                        sx={{width: '100%', '& .MuiInputBase-input': {mt:'0.75em', fontSize: '1.5em', fontFamily: "'M PLUS Rounded 1c', sans-serif"}, bgcolor: 'secondary.main', color: 'primary.main'}}
                         onChange={(e) => setInputText(e.target.value)}
                     />
 

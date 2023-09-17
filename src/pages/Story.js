@@ -2,22 +2,29 @@ import HTMLFlipBook from "react-pageflip";
 import * as React from 'react';
 import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import "../App.css"
 import {getGeneratedImages, getStory, getTitle} from "../generate-text";
 import DownloadIcon from '@mui/icons-material/Download';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import jsPDF from 'jspdf';
 import { saveAs } from 'file-saver';
 import {generateVoice} from "../generate-voice";
 
 import { FallingLines } from  'react-loader-spinner'
 import Typography from "@mui/material/Typography";
+import TextCarousel from '../components/TextCarousel';
+
 
 const PageCover = React.forwardRef((props, ref) => {
     return (
         <div className="cover" id="cover" ref={ref} data-density="hard">
-            <div className="title-container">
+            <div className="title-container" style={{ fontFamily: "'Lilita One', cursive",
+                                                        fontSize: '1rem',
+                                                        color: '#F3FDE8',
+                                                        fontWeight: 200,
+                                                        display: 'inline-block' }}>
                 <span className="title">{props.children}</span>
             </div>
         </div>
@@ -35,12 +42,18 @@ const Page = React.forwardRef((props, ref) => {
 export default function Story() {
     const {state} = useLocation();
     const {story} = state
+    const navigate = useNavigate();
+
 
     const [imageUrls, setImageUrls] = React.useState([]);
     const [realStory, setRealStory] = React.useState("");
     const [currentPageIndex, setCurrentPageIndex] = React.useState(0);
     const [realTitle, setRealTitle] = React.useState("");
     const [pdf, setPdf] = React.useState(null);
+
+    const goToPromptPage = () => {
+        navigate("/prompt"); 
+    };
 
     React.useEffect(() => {
         // Define an async function within the useEffect
@@ -89,7 +102,7 @@ export default function Story() {
                 />
 
                 <div>
-                    <Typography variant="rounded">Generating your story...</Typography>
+                    <TextCarousel />
                 </div>
             </Box>
         );
@@ -164,7 +177,10 @@ export default function Story() {
                 
                 <Box sx={{ display: 'flex', flexDirection: "column",justifyContent: 'flex-end', p: '2%' }}>
                     <img src="https://media.giphy.com/media/asCRsWMrcEdD7cvt2W/giphy.gif" className="owl-story" alt="owl"/>
-
+                    
+                    <Fab variant="extended" onClick={goToPromptPage} sx={{ mb: 4 }}>
+                        <ArrowBackIcon sx={{ mr: 2 }}/>Try Again
+                    </Fab>
                     <Fab variant="extended" onClick={generateSpeech} sx={{ mb: 4 }}>
                         <VolumeUpIcon sx={{ mr: 2 }}/>Speak
                     </Fab>
@@ -187,7 +203,7 @@ export default function Story() {
                     flippingTime={800}
                     onFlip={(e) => setCurrentPageIndex(e.data)}
                 >
-                    <PageCover>
+                    <PageCover >
                         {realTitle !== "" ? realTitle : "My Story"}
                     </PageCover>
                     {pages.map((page, index) => {
