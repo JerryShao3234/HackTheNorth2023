@@ -48,13 +48,27 @@ export default function Story() {
                 setRealStory(upscaledStory);
                 const urls = await getGeneratedImages(upscaledStory);
                 setImageUrls(urls);
+
+                localStorage.setItem("story", upscaledStory);
+                localStorage.setItem("imageUrls", JSON.stringify(urls));
             } catch (err) {
                 console.log(err)
             }
-        }    
-        getData();
+        }
+
+        const cacheStory = localStorage.getItem("story");
+        const cacheImageUrls = localStorage.getItem("imageUrls");
+
+        if (cacheStory !== null && cacheImageUrls !== null) {
+            console.log("cache hit")
+            setRealStory(cacheStory);
+            setImageUrls(JSON.parse(cacheImageUrls));
+        } else {
+            getData();
+        }
+
     }, []);
-    
+
 
     if (imageUrls.length === 0) {
         return (
@@ -97,32 +111,32 @@ export default function Story() {
         const downloadStory = async () => {
             const pdfDoc = new jsPDF();
             console.log("downloading");
-        
+
             for (let index = 0; index < imageUrls.length; index++) {
                 const imageUrl = imageUrls[index];
-        
+
                 const img = new Image();
                 img.src = imageUrl;
-        
+
                 // Wait for the image to load
                 await new Promise((resolve) => {
                     img.onload = resolve;
                 });
-        
+
                 //save the image into a pdf file
-            
+
                 pdfDoc.addImage(img, 'JPEG', 10, 10, 90, 0);
-                
+
                 if(index < imageUrls.length - 1) {
                     pdfDoc.addPage();
                 }
-    
+
             }
-        
+
             // Add a page with text
             pdfDoc.addPage();
             pdfDoc.text(10, 10, realStory, {maxWidth: 180});
-        
+
             // Save the PDF using FileSaver.js
             const pdfBlob = pdfDoc.output('blob');
             saveAs(pdfBlob, 'story.pdf');
@@ -152,8 +166,8 @@ export default function Story() {
                     <PageCover>My Story</PageCover>
                     {pages.map((page, index) => {
                         return (
-                            <Box sx={{boxShadow: 3}}>
-                                <Page number={index + 1} key={index}>
+                            <Box sx={{boxShadow: 3}} key={index}>
+                                <Page number={index + 1}>
                                     <Box sx={{ p: '2%' }}>
                                         <div>
                                         <Box
