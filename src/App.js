@@ -18,21 +18,34 @@ const theme = createTheme({
         }
     },
     typography: {
+      title: {
+            fontFamily: "'Lilita One', cursive",
+            fontSize: '6rem',
+            color: '#F3FDE8',
+            fontWeight: 700,
+            display: 'inline-block'
+      },
+      rounded: {
+            fontFamily: "'M PLUS Rounded 1c', sans-serif",
+            fontSize: '2rem',
+            color: '#558ABB', 
+            
+      },
       poster: {
-          fontFamily: [
-              'Nunito',
-              'Roboto',
-              '"Helvetica Neue"',
-              'Arial',
-              'sans-serif'
-              ].join(','),
-          fontSize: '4rem',
-          color: '#F3FDE8',
-          fontWeight: 700,
-          display: 'inline-block'
+            fontFamily: [
+                'Nunito',
+                'Roboto',
+                '"Helvetica Neue"',
+                'Arial',
+                'sans-serif'
+                ].join(','),
+            fontSize: '4rem',
+            color: '#F3FDE8',
+            fontWeight: 700,
+            display: 'inline-block'
       },
       paragraph: {
-          fontSize: '1.5rem',
+            fontSize: '1.5rem',
       }
     },
     components: {
