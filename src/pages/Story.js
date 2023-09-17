@@ -4,11 +4,12 @@ import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
 import {useLocation} from "react-router-dom";
 import "../App.css"
-import {getGeneratedImages, getStory} from "../generate";
+import {getGeneratedImages, getStory} from "../generate-text";
 import DownloadIcon from '@mui/icons-material/Download';
-import html2canvas from 'html2canvas';
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import jsPDF from 'jspdf';
 import { saveAs } from 'file-saver';
+import {generateVoice} from "../generate-voice";
 
 import { FallingLines } from  'react-loader-spinner'
 
@@ -38,7 +39,8 @@ export default function Story() {
 
     const [imageUrls, setImageUrls] = React.useState([]);
     const [realStory, setRealStory] = React.useState("");
-    const [pdf, setPdf] = React.useState(null);
+    const [currentPageIndex, setCurrentPageIndex] = React.useState(0);
+    
 
     React.useEffect(() => {
         // Define an async function within the useEffect
@@ -92,7 +94,7 @@ export default function Story() {
         console.log(arrayCounts);
 
         let sentenceIndex = 0;
-        let pages = []
+        let pages = [];
         for (let i = 0; i < arrayCounts.length; i++) {
             const pageObject = {
                 paragraph: "",
@@ -107,6 +109,7 @@ export default function Story() {
             pageObject.imageUrl = imageUrls[i];
             pages.push(pageObject);
         }
+        
 
         const downloadStory = async () => {
             const pdfDoc = new jsPDF();
@@ -142,12 +145,20 @@ export default function Story() {
             saveAs(pdfBlob, 'story.pdf');
         };
 
+        const generateSpeech = () => {
+            generateVoice(pages, currentPageIndex-1);
+        }
+
         return (
             <div bgcolor="LightCyan">
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', py: '2%' }}>
                     <Fab variant="extended" onClick={downloadStory}>
-                    <DownloadIcon sx={{ mr: 1 }}/>
+                    <DownloadIcon sx={{ mr: 2 }}/>
                     Download Story
+                    </Fab>
+                    <Fab variant="extended" onClick={generateSpeech} >
+                    <VolumeUpIcon sx={{ mr: 2 }}/>
+                    Speak
                     </Fab>
                 </Box>
 
@@ -163,6 +174,7 @@ export default function Story() {
                     maxShadowOpacity={0.5}
                     showCover={true}
                     flippingTime={1000}
+                    onFlip={(e) => setCurrentPageIndex(e.data)}
                 >
                     <PageCover>My Story</PageCover>
                     {pages.map((page, index) => {

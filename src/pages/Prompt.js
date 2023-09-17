@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 
 import TextField from '@mui/material/TextField';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
-import {getStory} from '../generate';
+import {getStory} from '../generate-text';
 import { useNavigate } from "react-router-dom";
 import * as React from 'react';
 
