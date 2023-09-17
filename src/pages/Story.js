@@ -119,7 +119,7 @@ export default function Story() {
             pageObject.imageUrl = imageUrls[i];
             pages.push(pageObject);
         }
-        
+
 
         const downloadStory = async () => {
             const pdfDoc = new jsPDF();
@@ -171,10 +171,10 @@ export default function Story() {
                     Speak
                     </Fab>
                 </Box>
-            
+
                 <HTMLFlipBook
                     width={550}
-                    height={650}
+                    height={700}
 
                     size="stretch"
                     minWidth={315}

@@ -87,7 +87,7 @@ body {
   flex-grow: 1;
   text-align: justify;
   margin: 10px 0;
-  padding: 15px 0;
+  padding: 4px 0;
   box-sizing: border-box;
   border-top: 1px solid #FFD9B7;
   line-height: 150%;
@@ -95,6 +95,7 @@ body {
 
 .page-footer {
     height: 30px;
+    padding-top: 10px;
     border-top: 1px solid #FFD9B7;
     font-size: 80%;
     position: absolute;
@@ -110,6 +111,7 @@ body {
     transform: translate(-50%, 0);
     top: 20%;
     height: 100%;
+    width: 90%;
     text-align: center;
 }
 
