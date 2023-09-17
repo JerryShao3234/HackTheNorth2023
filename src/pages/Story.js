@@ -119,7 +119,7 @@ export default function Story() {
             pageObject.imageUrl = imageUrls[i];
             pages.push(pageObject);
         }
-        
+
 
         const downloadStory = async () => {
             const pdfDoc = new jsPDF();
@@ -161,20 +161,18 @@ export default function Story() {
 
         return (
             <div bgcolor="LightCyan" className="giant-container">
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end', py: '2%' }}>
-                    <Fab variant="extended" onClick={downloadStory}>
-                    <DownloadIcon sx={{ mr: 2 }}/>
-                    Download Story
+                <Box sx={{ display: 'flex', flexDirection: "column",justifyContent: 'flex-end', p: '2%' }}>
+                    <Fab variant="extended" onClick={generateSpeech} sx={{ mb: 4 }}>
+                        <VolumeUpIcon sx={{ mr: 2 }}/>Speak
                     </Fab>
-                    <Fab variant="extended" onClick={generateSpeech} >
-                    <VolumeUpIcon sx={{ mr: 2 }}/>
-                    Speak
+                    <Fab variant="extended" onClick={downloadStory}>
+                        <DownloadIcon sx={{ mr: 2 }}/>Download
                     </Fab>
                 </Box>
-            
+
                 <HTMLFlipBook
                     width={550}
-                    height={650}
+                    height={700}
 
                     size="stretch"
                     minWidth={315}
@@ -216,20 +214,6 @@ export default function Story() {
                     })}
                     <PageCover>
                         <div>The End</div>
-                        <Box>
-                            <Fab variant="extended" sx={{
-                                fontFamily: "'M PLUS Rounded 1c', sans-serif",
-                                fontWeight: 700,
-                                borderRadius: 4,
-                                boxShadow: '0 9px 1px -2px rgba(0, 0, 0, 0.2)',
-                                bgcolor: "secondary.main",
-                                py: 2,
-                                fontSize: "1rem"
-                            }} onClick={downloadStory}>
-                                <DownloadIcon sx={{ mr: 1 }}/>
-                                Download
-                            </Fab>
-                        </Box>
                     </PageCover>
                 </HTMLFlipBook>
             </div>
