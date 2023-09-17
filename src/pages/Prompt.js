@@ -18,12 +18,15 @@ export default function Prompt() {
             alert("Please write something!");
         }
 
+        localStorage.setItem("story", null);
+        localStorage.setItem("imageUrls", null);
+
         navigate("/story", {state: {story: input}})
     }
 
     return (
         <div>
-            
+
             <Box sx={{ py: '5%', px: '3%', bgcolor: 'primary.main'}}>
 
                 {/* <Box sx={{ py: '3%', bgcolor: 'primary.main', height:10}}> */}
@@ -59,7 +62,7 @@ export default function Prompt() {
                 </Box>
             </Box>
 
-            
+
         </div>
     )
 }
