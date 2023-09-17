@@ -12,6 +12,8 @@ import { saveAs } from 'file-saver';
 
 import { FallingLines } from  'react-loader-spinner'
 
+// doesnt make sense that when react refreshses, the midjourney
+
 const PageCover = React.forwardRef((props, ref) => {
     return (
         <div className="cover" id="cover" ref={ref} data-density="hard">
@@ -137,7 +139,7 @@ export default function Story() {
 
                 <HTMLFlipBook
                     width={550}
-                    height={733}
+                    height={600}
                     size="stretch"
                     minWidth={315}
                     maxWidth={1000}

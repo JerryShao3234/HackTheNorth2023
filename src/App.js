@@ -9,38 +9,50 @@ import {Route, Routes, useNavigate} from "react-router-dom";
 
 
 const theme = createTheme({
-  palette: {
-    primary: {
-        main: "#A8DF8E"
+    palette: {
+      primary: {
+          main: "#A8DF8E"
+      },
+      secondary: {
+          main: "#F3FDE8"
+        }
     },
-    secondary: {
-        main: "#F3FDE8"
+    typography: {
+      poster: {
+          fontFamily: [
+              'Nunito',
+              'Roboto',
+              '"Helvetica Neue"',
+              'Arial',
+              'sans-serif'
+              ].join(','),
+          fontSize: '4rem',
+          color: '#F3FDE8',
+          fontWeight: 700,
+          display: 'inline-block'
+      },
+      paragraph: {
+          fontSize: '1.5rem',
       }
-  },
-  typography: {
-    poster: {
-        fontFamily: [
-            'Nunito',
-            'Roboto',
-            '"Helvetica Neue"',
-            'Arial',
-            'sans-serif'
-            ].join(','),
-        fontSize: '4rem',
-        color: '#F3FDE8',
-        fontWeight: 700,
-        display: 'inline-block'
     },
-    paragraph: {
-        fontSize: '1.5rem',
+    components: {
+      MuiButton: {
+        variants: [
+          {
+            props: { variant: 'round' },
+            style: {
+              fontFamily: "'M PLUS Rounded 1c', sans-serif",
+              borderRadius : 4,
+              boxShadow: '0 9px 1px -2px rgba(0, 0, 0, 0.2)',
+              backgroundColor: '#F3FDE8',
+              padding: '8px 80px',  // equivalent to py: 2 and px: 20 using 'sx' prop
+              fontSize: '1rem'
+            }
+          }
+        ]
+      }
     }
-  },
-  button: {
-    round: {
-
-    },
-  }
-});
+  });
 
 function App() {
 
