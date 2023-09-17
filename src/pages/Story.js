@@ -59,7 +59,7 @@ export default function Story() {
         const cacheStory = localStorage.getItem("story");
         const cacheImageUrls = localStorage.getItem("imageUrls");
 
-        if (cacheStory !== null && cacheImageUrls !== null) {
+        if (cacheStory !== "undefined" && cacheImageUrls !== "undefined") {
             console.log("cache hit")
             setRealStory(cacheStory);
             setImageUrls(JSON.parse(cacheImageUrls));
@@ -82,7 +82,7 @@ export default function Story() {
             </Box>
         );
     } else {
-        let sentences = realStory.split(".");
+        let sentences = splitSentence(realStory);
         sentences.pop();
         sentences = sentences.map((sentence) => {
             return sentence.trim() + ". "
@@ -191,6 +191,16 @@ export default function Story() {
             </div>
         );
     }
+}
+
+const splitSentence = (sentence) => {
+    // Use a regular expression to split the sentence based on end punctuation
+    const sentences = sentence.split(/[\.\!\?]/);
+
+    // Remove any empty strings from the result
+    const cleanedSentences = sentences.filter((s) => s.trim() !== '');
+
+    return cleanedSentences;
 }
 
 const getSentencesPerSceneArray = (sentenceCount, sceneCount) => {

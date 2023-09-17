@@ -18,8 +18,8 @@ export default function Prompt() {
             alert("Please write something!");
         }
 
-        localStorage.setItem("story", null);
-        localStorage.setItem("imageUrls", null);
+        localStorage.setItem("story", undefined);
+        localStorage.setItem("imageUrls", undefined);
 
         navigate("/story", {state: {story: input}})
     }
