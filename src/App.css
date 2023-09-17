@@ -77,3 +77,23 @@
     width: 96%;
     overflow: hidden
 }
+
+.title-container {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    top: 20%;
+    height: 100%;
+}
+
+.title {
+    font-family: 'Georgia', sans-serif;
+    font-size: 3em;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: #FFD700;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}

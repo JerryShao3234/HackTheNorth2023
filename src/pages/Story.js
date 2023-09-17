@@ -14,8 +14,8 @@ import { FallingLines } from  'react-loader-spinner'
 const PageCover = React.forwardRef((props, ref) => {
     return (
         <div className="cover" id="cover" ref={ref} data-density="hard">
-            <div>
-                <h2>{props.children}</h2>
+            <div className="title-container">
+                <span className="title">{props.children}</span>
             </div>
         </div>
     );
@@ -160,7 +160,9 @@ export default function Story() {
                     showCover={true}
                     flippingTime={1000}
                 >
-                    <PageCover>My Story</PageCover>
+                    <PageCover>
+                        My Story
+                    </PageCover>
                     {pages.map((page, index) => {
                         return (
                             <Box sx={{boxShadow: 3}} key={index}>
